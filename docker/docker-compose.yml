@@ -1,0 +1,29 @@
+version: '3.7'
+
+services:
+  mongodb:
+    build: ./mongo
+    container_name: mongo
+    hostname: mongo
+    volumes:
+        - ./mongo/mongod.conf:/etc/mongod.conf
+        - ./mongodata/data/db/:/data/db/
+    env_file:
+        - .env
+    environment:
+        MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME}
+        MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
+        MONGO_INITDB_DATABASE: ${MONGO_INITDB_DATABASE}
+    ports:
+        - "27017:27017"
+    
+  go:
+    container_name: 'go'
+    build: ./go
+    volumes:
+        - ./go/start.sh:/start.sh
+        - ../mongoservice:/go/src/mongoservice
+    command: '/bin/sh /start.sh'
+    network_mode: 'host'
+    ports: 
+        - "8888:8888"

@@ -1,0 +1,1 @@
+cd /go/src/mongoservice && dep ensure && go run main.go
