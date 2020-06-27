@@ -7,7 +7,7 @@ services:
     hostname: mongo
     volumes:
         - ./mongo/mongod.conf:/etc/mongod.conf
-        - ./mongodata/data/db/:/data/db/
+        - ./data/mongodata/data/db/:/data/db/
     env_file:
         - .env
     environment:
@@ -20,6 +20,7 @@ services:
   go:
     container_name: 'go'
     build: ./go
+    restart: always
     volumes:
         - ./go/start.sh:/start.sh
         - ../mongoservice:/go/src/mongoservice
@@ -27,3 +28,15 @@ services:
     network_mode: 'host'
     ports: 
         - "8888:8888"
+
+  db:
+    container_name: 'postgres'
+    build: ./postgres
+    network_mode: "host"
+    volumes:
+      - ./data/postgres-data:/var/lib/postgresql/data
+      - ../../:/src/
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_PASSWORD: pass
