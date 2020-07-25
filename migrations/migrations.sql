@@ -13,7 +13,7 @@ CREATE TABLE email (
 CREATE TABLE upload_path (
     id serial PRIMARY KEY,
     email_id INT,
-    file_path TEXT
-    CONSTRAINT fk_email FOREIGN KEY(email_id) REFERENCES email(id) 
+    file_path TEXT,
+    CONSTRAINT fk_email FOREIGN KEY (email_id) REFERENCES email(id)
     ON UPDATE NO ACTION ON DELETE NO ACTION
 );
