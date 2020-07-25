@@ -1,8 +1,8 @@
 package routes
 
 import (
-	"mongoservice/mongocontroller"
 	"net/http"
+	"services/mongocontroller"
 )
 
 // Route struct

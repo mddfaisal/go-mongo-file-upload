@@ -1,7 +1,7 @@
 package router
 
 import (
-	"mongoservice/routes"
+	"services/routes"
 
 	"github.com/gorilla/mux"
 )

@@ -2,8 +2,8 @@ package main
 
 import (
 	"log"
-	"mongoservice/router"
 	"net/http"
+	"services/router"
 )
 
 func main() {

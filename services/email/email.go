@@ -2,7 +2,7 @@ package email
 
 import (
 	"encoding/json"
-	"mongoservice/db"
+	"services/db"
 
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"gopkg.in/mgo.v2/bson"

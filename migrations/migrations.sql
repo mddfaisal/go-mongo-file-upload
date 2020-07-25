@@ -6,5 +6,6 @@ CREATE TABLE email (
     date_time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     subject TEXT NOT NULL,
     muid TEXT NOT NULL UNIQUE,
+    content_type TEXT,
     mongo_id TEXT
 );

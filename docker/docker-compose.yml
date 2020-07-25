@@ -23,7 +23,7 @@ services:
     restart: always
     volumes:
         - ./go/start.sh:/start.sh
-        - ../mongoservice:/go/src/mongoservice
+        - ../services:/go/src/services
     command: '/bin/sh /start.sh'
     network_mode: 'host'
     ports: 

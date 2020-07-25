@@ -3,8 +3,8 @@ package mongocontroller
 import (
 	"encoding/json"
 	"fmt"
-	"mongoservice/email"
 	"net/http"
+	"services/email"
 )
 
 // GetEmail get email
