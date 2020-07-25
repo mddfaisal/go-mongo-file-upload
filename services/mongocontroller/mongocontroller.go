@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"net/http"
 	"services/email"
+	"services/utils"
 )
 
 // GetEmail get email
@@ -13,6 +14,7 @@ func GetEmail(w http.ResponseWriter, r *http.Request) {
 	err := json.NewDecoder(r.Body).Decode(&e)
 	if err != nil {
 		fmt.Println("Error in json decode.")
+		fmt.Println(utils.Trace())
 	}
 	em, err := e.FindOne()
 	w.Header().Set("Content-Type", "application/json")
@@ -28,12 +30,10 @@ func NewEmail(w http.ResponseWriter, r *http.Request) {
 	err := json.NewDecoder(r.Body).Decode(&e)
 	if err != nil {
 		fmt.Println("Error in json decode.")
+		fmt.Println(utils.Trace())
 	}
-	id, err := e.New()
-	if err != nil {
-		fmt.Println(err)
-	}
-	json := `{"lastid": "` + id + `"}`
+	e.Create()
+	json := `{"_id": "` + e.ID + `"}`
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusCreated)
 	w.Write([]byte(json))

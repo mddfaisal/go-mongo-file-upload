@@ -3,6 +3,7 @@ package db
 import (
 	"context"
 	"fmt"
+	"services/utils"
 	"sync"
 	"time"
 
@@ -23,12 +24,13 @@ var (
 
 func init() {
 	once.Do(func() {
-		clientOptions := options.Client().ApplyURI("mongodb://root:root@localhost:27017")
+		clientOptions := options.Client().ApplyURI("mongodb://root:root@127.0.0.1:27017")
 		client, err := mongo.Connect(context.TODO(), clientOptions)
 		if err != nil {
 			fmt.Println(err)
+			fmt.Println(utils.Trace())
 		}
-		ctx, _ := context.WithTimeout(context.Background(), 1000*time.Second)
+		ctx, _ := context.WithTimeout(context.Background(), 100000*time.Second)
 		col := client.Database("Emails").Collection("email")
 		conn = &Conn{
 			Collection: col,

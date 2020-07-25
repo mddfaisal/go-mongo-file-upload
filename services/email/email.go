@@ -2,7 +2,9 @@ package email
 
 import (
 	"encoding/json"
+	"fmt"
 	"services/db"
+	"services/utils"
 
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"gopkg.in/mgo.v2/bson"
@@ -16,10 +18,15 @@ type Email struct {
 }
 
 // New new email
-func (e *Email) New() (string, error) {
+func (e *Email) Create() string {
 	dbh := db.GetDb()
 	result, err := dbh.Collection.InsertOne(*dbh.Ctx, e)
-	return result.InsertedID.(primitive.ObjectID).Hex(), err
+	if err != nil {
+		fmt.Println(utils.Trace())
+		panic(err)
+	}
+	e.ID = result.InsertedID.(primitive.ObjectID).Hex()
+	return e.ID
 }
 
 // FindOne find one document
