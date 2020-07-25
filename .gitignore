@@ -1,3 +1,5 @@
 docker/mongodata
 docker/data/
 mongoservice/vendor/
+data/
+
