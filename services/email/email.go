@@ -2,6 +2,7 @@ package email
 
 import (
 	"encoding/json"
+	"encoding/base64"
 	"fmt"
 	"services/db"
 	"services/utils"
@@ -37,4 +38,16 @@ func (e *Email) FindOne() ([]byte, error) {
 	err := dbh.Collection.FindOne(*dbh.Ctx, bson.M{"_id": objID}).Decode(&e)
 	str, _ := json.Marshal(e)
 	return str, err
+}
+
+// DecodeHTML decode html
+func (e *Email) DecodeHTML() {
+	data, err := base64.URLEncoding.DecodeString(e.HTML)
+	e.HTML = map[bool]string{true: string(data), false: ""}[err == nil]
+}
+
+// DecodeSubject decode subject
+func (e *Email) DecodeSubject() {
+	data, err := base64.URLEncoding.DecodeString(e.Subject)
+	e.Subject = map[bool]string{true: string(data), false: ""}[err == nil]
 }

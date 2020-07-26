@@ -2,7 +2,6 @@ package mongocontroller
 
 import (
 	"encoding/json"
-	"encoding/base64"
 	"fmt"
 	"net/http"
 	"services/email"
@@ -38,11 +37,16 @@ func NewEmail(w http.ResponseWriter, r *http.Request) {
 		responseCode = http.StatusBadRequest
 		jsonData = `{"_id": "", "msg": "No Content"}`
 	} else {
-		e.HTML = decodestring(e.HTML)
-		e.Subject = decodestring(e.Subject)
-		e.Create()
-		jsonData = `{"_id": "` + e.ID + `", "msg": "OK"}`
-		responseCode = http.StatusCreated
+		e.DecodeHTML()
+		e.DecodeSubject()
+		if e.Subject == "" || e.HTML == "" {
+			responseCode = http.StatusBadRequest
+			jsonData = `{"_id": "", "msg": "No Content"}`
+		} else {
+			e.Create()
+			jsonData = `{"_id": "` + e.ID + `", "msg": "OK"}`
+			responseCode = http.StatusCreated
+		}
 	}
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(responseCode)
@@ -54,12 +58,3 @@ func UpdateEmail(w http.ResponseWriter, r *http.Request) {}
 
 // DeleteEmail delete email
 func DeleteEmail(w http.ResponseWriter, r *http.Request) {}
-
-func decodestring(str string) string {
-	data, err := base64.StdEncoding.DecodeString(str)
-	if err == nil {
-		return string(data)
-	}
-	fmt.Println(err)
-	return ""
-}
