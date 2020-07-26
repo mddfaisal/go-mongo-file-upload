@@ -12,9 +12,10 @@ import (
 
 // Email email struct
 type Email struct {
-	ID   string `json:"_id"`
-	Muid string `json:"muid"`
-	HTML string `json:"html"`
+	ID      string `json:"_id"`
+	Muid    string `json:"muid"`
+	HTML    string `json:"html"`
+	Subject string `json:"subject"`
 }
 
 // New new email

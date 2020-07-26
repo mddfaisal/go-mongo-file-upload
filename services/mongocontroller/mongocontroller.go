@@ -2,6 +2,7 @@ package mongocontroller
 
 import (
 	"encoding/json"
+	"encoding/base64"
 	"fmt"
 	"net/http"
 	"services/email"
@@ -27,16 +28,25 @@ func GetEmail(w http.ResponseWriter, r *http.Request) {
 // NewEmail create new email
 func NewEmail(w http.ResponseWriter, r *http.Request) {
 	var e email.Email
+	jsonData := ""
+	responseCode := http.StatusOK
 	err := json.NewDecoder(r.Body).Decode(&e)
 	if err != nil {
-		fmt.Println("Error in json decode.")
-		fmt.Println(utils.Trace())
+		panic(err)
 	}
-	e.Create()
-	json := `{"_id": "` + e.ID + `"}`
+	if e.Muid == "" || e.Subject == "" || e.HTML == "" {
+		responseCode = http.StatusBadRequest
+		jsonData = `{"_id": "", "msg": "No Content"}`
+	} else {
+		e.HTML = decodestring(e.HTML)
+		e.Subject = decodestring(e.Subject)
+		e.Create()
+		jsonData = `{"_id": "` + e.ID + `", "msg": "OK"}`
+		responseCode = http.StatusCreated
+	}
 	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(http.StatusCreated)
-	w.Write([]byte(json))
+	w.WriteHeader(responseCode)
+	w.Write([]byte(jsonData))
 }
 
 // UpdateEmail update email
@@ -44,3 +54,12 @@ func UpdateEmail(w http.ResponseWriter, r *http.Request) {}
 
 // DeleteEmail delete email
 func DeleteEmail(w http.ResponseWriter, r *http.Request) {}
+
+func decodestring(str string) string {
+	data, err := base64.StdEncoding.DecodeString(str)
+	if err == nil {
+		return string(data)
+	}
+	fmt.Println(err)
+	return ""
+}
