@@ -1,0 +1,63 @@
+syntax = "proto3";
+
+package emailbody;
+
+// Start Get Email by Id
+message EmailBodyGetRequest {
+    string Id = 1;
+}
+
+message EmailBodyGetResponse {
+    string Id = 1;
+    string Muid = 2;
+    string Subject = 3;
+    string Html = 4;
+    uint32 StatusCode = 5;
+}
+// End Get Email by Id
+
+message EmailBodyPostRequest {
+    string Muid = 1;
+    string Subject = 2;
+    string Html = 3;
+}
+
+message EmailBodyPostResponse {
+    string Id = 1;
+    uint32 StatusCode = 2;
+}
+
+message EmailBodyPutRequest {
+    string Id = 1;
+    string Muid = 2;
+    string Subject = 3;
+    string Html = 4; 
+}
+
+message EmailBodyPutResponse {
+    uint32 StatusCode = 1;
+}
+
+message EmailBodyDeleteRequest {
+    string Id = 1;
+}
+
+message EmailBodyDeleteResponse {
+    uint32 StatusCode = 1;
+}
+
+service EmailBodyGetTxn {
+    rpc GetEmailBody(EmailBodyGetRequest) returns (EmailBodyGetResponse) {}
+}
+
+service EmailBodyPostTxn {
+    rpc PostEmailBody(EmailBodyPostRequest) returns (EmailBodyPostResponse) {}
+}
+
+service EmailBodyPutTxn {
+    rpc PutEmailBody(EmailBodyPutRequest) returns (EmailBodyPutResponse) {}
+}
+
+service EmailBodyDeleteTxn {
+    rpc DeleteEmailBody(EmailBodyDeleteRequest) returns (EmailBodyDeleteResponse) {}
+}

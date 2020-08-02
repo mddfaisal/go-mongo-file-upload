@@ -1,1 +1,1 @@
-cd /go/src/services && go run main.go
+cd /go/src/services && go run app.go

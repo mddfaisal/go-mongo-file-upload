@@ -28,7 +28,7 @@ services:
     command: '/bin/sh /start.sh'
     network_mode: host
     ports: 
-        - 8888:8888
+        - 50051:50051
 
   db:
     container_name: service_postgres

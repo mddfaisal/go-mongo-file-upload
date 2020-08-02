@@ -5,6 +5,9 @@ import (
 	"runtime"
 )
 
+// Server server
+type Server struct{}
+
 // Trace to trace errors
 func Trace() string {
 	pc := make([]uintptr, 10) // at least 1 entry needed

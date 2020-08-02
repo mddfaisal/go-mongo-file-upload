@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+package attachment;
+
+message AttachmentPostRequest {
+    string Muid = 1;
+    string Filename = 2;
+    string Mimetype = 3;
+    string Data = 4;
+}
+
+message AttachmentPostResponse {
+    string Path = 1;
+    uint32 StatusCode = 2;
+}
+
+service AttachmentPostTxn {
+    rpc PostAttachment(AttachmentPostRequest) returns (AttachmentPostResponse) {}
+}
