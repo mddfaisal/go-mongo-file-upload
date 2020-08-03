@@ -2,7 +2,6 @@ syntax = "proto3";
 
 package emailbody;
 
-// Start Get Email by Id
 message EmailBodyGetRequest {
     string Id = 1;
 }
@@ -12,9 +11,8 @@ message EmailBodyGetResponse {
     string Muid = 2;
     string Subject = 3;
     string Html = 4;
-    uint32 StatusCode = 5;
+    string Status = 5;
 }
-// End Get Email by Id
 
 message EmailBodyPostRequest {
     string Muid = 1;
@@ -24,7 +22,7 @@ message EmailBodyPostRequest {
 
 message EmailBodyPostResponse {
     string Id = 1;
-    uint32 StatusCode = 2;
+    string Status = 2;
 }
 
 message EmailBodyPutRequest {
@@ -35,7 +33,7 @@ message EmailBodyPutRequest {
 }
 
 message EmailBodyPutResponse {
-    uint32 StatusCode = 1;
+    string Status = 1;
 }
 
 message EmailBodyDeleteRequest {
@@ -43,7 +41,7 @@ message EmailBodyDeleteRequest {
 }
 
 message EmailBodyDeleteResponse {
-    uint32 StatusCode = 1;
+    string Status = 1;
 }
 
 service EmailBodyGetTxn {

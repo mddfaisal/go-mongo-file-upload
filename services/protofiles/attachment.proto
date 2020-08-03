@@ -11,7 +11,7 @@ message AttachmentPostRequest {
 
 message AttachmentPostResponse {
     string Path = 1;
-    uint32 StatusCode = 2;
+    string Status = 2;
 }
 
 service AttachmentPostTxn {

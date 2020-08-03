@@ -1,6 +1,7 @@
 package attachmentservice
 
 import (
+	"fmt"
 	att "services/attachment"
 
 	"golang.org/x/net/context"
@@ -14,7 +15,10 @@ func GetService() *Server {
 	return &Server{}
 }
 
-// MakeTransaction make transaction
-func (s *Server) MakeTransaction(ctx context.Context, in *att.AttachmentRequest) (*att.AttachmentResponse, error) {
-	return &att.AttachmentResponse{}, nil
+// PostAttachment make transaction
+func (s *Server) PostAttachment(ctx context.Context, in *att.AttachmentPostRequest) (*att.AttachmentPostResponse, error) {
+	fmt.Println(in.Muid)
+	fmt.Println(in.Filename)
+	fmt.Println(in.Data)
+	return &att.AttachmentPostResponse{}, nil
 }

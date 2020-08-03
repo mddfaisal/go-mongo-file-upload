@@ -21,8 +21,8 @@ func Run() {
 		panic(err)
 	}
 	ser := grpc.NewServer()
-	eb.RegisterEmailBodyTransactionServer(ser, emailbodyservice.GetService())
-	att.RegisterAttachmentTransactionServer(ser, attachmentservice.GetService())
+	eb.RegisterEmailBodyPostTxnServer(ser, emailbodyservice.GetService())
+	att.RegisterAttachmentPostTxnServer(ser, attachmentservice.GetService())
 	reflection.Register(ser)
 	if err := ser.Serve(listen); err != nil {
 		fmt.Println(err)

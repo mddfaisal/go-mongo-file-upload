@@ -1,7 +1,6 @@
 package email
 
 import (
-	"encoding/json"
 	"encoding/base64"
 	"fmt"
 	"services/db"
@@ -19,7 +18,7 @@ type Email struct {
 	Subject string `json:"subject"`
 }
 
-// New new email
+// Create new email
 func (e *Email) Create() string {
 	dbh := db.GetDb()
 	result, err := dbh.Collection.InsertOne(*dbh.Ctx, e)
@@ -32,22 +31,18 @@ func (e *Email) Create() string {
 }
 
 // FindOne find one document
-func (e *Email) FindOne() ([]byte, error) {
+func (e *Email) FindOne() error {
 	dbh := db.GetDb()
 	objID, _ := primitive.ObjectIDFromHex(e.ID)
 	err := dbh.Collection.FindOne(*dbh.Ctx, bson.M{"_id": objID}).Decode(&e)
-	str, _ := json.Marshal(e)
-	return str, err
+	if err != nil {
+		return err
+	}
+	return nil
 }
 
 // DecodeHTML decode html
 func (e *Email) DecodeHTML() {
 	data, err := base64.URLEncoding.DecodeString(e.HTML)
 	e.HTML = map[bool]string{true: string(data), false: ""}[err == nil]
-}
-
-// DecodeSubject decode subject
-func (e *Email) DecodeSubject() {
-	data, err := base64.URLEncoding.DecodeString(e.Subject)
-	e.Subject = map[bool]string{true: string(data), false: ""}[err == nil]
 }
