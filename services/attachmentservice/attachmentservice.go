@@ -33,12 +33,12 @@ func (s *Server) AttachmentCreateFile(ctx context.Context, in *att.AttachmentCre
 				fd, err := os.OpenFile(filePath, os.O_CREATE|os.O_TRUNC|os.O_WRONLY, 0777)
 				defer fd.Close()
 				if err == nil {
-					return &att.AttachmentCreateFileResponse{Status: codes.OK.String()}, nil
+					return &att.AttachmentCreateFileResponse{Status: codes.OK.String(), FilePath: filePath}, nil
 				}
 			}
 		}
 	}
-	return &att.AttachmentCreateFileResponse{Status: codes.DataLoss.String()}, nil
+	return &att.AttachmentCreateFileResponse{Status: codes.DataLoss.String(), FilePath: ""}, nil
 }
 
 // WriteAttachmentFile make transaction
