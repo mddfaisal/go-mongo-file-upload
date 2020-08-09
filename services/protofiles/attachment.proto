@@ -2,18 +2,27 @@ syntax = "proto3";
 
 package attachment;
 
-message AttachmentPostRequest {
+message AttachmentCreateFileRequest {
     string Muid = 1;
-    string Filename = 2;
-    string Mimetype = 3;
-    string Data = 4;
+    string FileName = 2;
 }
 
-message AttachmentPostResponse {
-    string Path = 1;
-    string Status = 2;
+message AttachmentCreateFileResponse {
+    string Status = 1;
+}
+
+message AttachmentFileDataRequest {
+    bytes Data = 1;
+}
+
+message AttachmentFileDataResponse {
+    string Status = 1;
+}
+
+service AttachmentCreateFile {
+    rpc AttachmentCreateFile(AttachmentCreateFileRequest) returns (AttachmentCreateFileResponse) {}
 }
 
 service AttachmentPostTxn {
-    rpc PostAttachment(AttachmentPostRequest) returns (AttachmentPostResponse) {}
+    rpc WriteAttachmentFile(stream AttachmentFileDataRequest) returns (AttachmentFileDataResponse) {}
 }

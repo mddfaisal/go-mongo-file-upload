@@ -16,3 +16,11 @@ func Trace() string {
 	file, line := f.FileLine(pc[0])
 	return fmt.Sprintf("%s:%d %s", file, line, f.Name())
 }
+
+// Panic panic
+func Panic(err error) {
+	if err != nil {
+		fmt.Println(err)
+		panic(err)
+	}
+}
